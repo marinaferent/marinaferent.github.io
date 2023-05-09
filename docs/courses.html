@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>R Courses</title>
+
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="packages.html">R Packages</a>
+</li>
+<li>
+  <a href="courses.html">R Courses</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">R Courses</h1>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#basics-of-r-programming-language-in-statistical-analysis"
+id="toc-basics-of-r-programming-language-in-statistical-analysis">Basics
+of R programming language in statistical analysis</a>
+<ul>
+<li><a href="#course-aims" id="toc-course-aims">Course aims</a></li>
+<li><a href="#course-structure" id="toc-course-structure">Course
+structure</a></li>
+<li><a href="#additionally-proposed-exercises"
+id="toc-additionally-proposed-exercises">Additionally proposed
+exercises</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="basics-of-r-programming-language-in-statistical-analysis"
+class="section level1">
+<h1>Basics of R programming language in statistical analysis</h1>
+<p><a
+href="https://github.com/marinaferent/Basics-of-R-programming-language-in-statistical-analysis">The
+<strong>GitHub repository</strong> for the 2021 edition.</a></p>
+<div id="course-aims" class="section level2">
+<h2>Course aims</h2>
+<ul>
+<li>Differentiating between different R objects (vector, matrix, data
+frame, list) – generating the objects, properties, operations</li>
+<li>Visualizing data using base R graphics – bar charts, pie charts,
+histograms, scatter plots, line charts</li>
+<li>Analyzing data using predefined R functions – statistical measures,
+correlations, linear regression</li>
+<li>Writing an R code that uses control structures – for loops,
+conditional statements</li>
+<li>Writing user defined functions – applications on writing the
+functions for: statistical measures, correlations, linear
+regression</li>
+</ul>
+<p>Upon completion of this course, the participants are independent R
+users, being able to understand R code, write functions, and debug.
+Also, they will be able to perform a statistical analysis in R
+(visualizing, computing statistical measures, performing cross tab
+analysis, and linear regressions).</p>
+<p><strong>Prerequisites:</strong> Basic knowledge of descriptive
+statistics and introductory econometrics terms (statistical population,
+sample size, statistical variables, mean, median, mode, correlation,
+linear regression).</p>
+</div>
+<div id="course-structure" class="section level2">
+<h2>Course structure</h2>
+<p>8 online meetings of 1h 30min each.</p>
+<p><strong>Meetings 1-2: Basic notions</strong></p>
+<p><em>A. R STRUCTURES, PROPERTIES AND OPERATIONS: Vectors and Data
+Frames | Numerical representation of attributive variables:</em></p>
+<ul>
+<li>defining a vector, operations with vectors, vector properties,
+computing absolute, relative frequencies</li>
+<li>defining a matrix, operations with matrices, matrix properties</li>
+<li>reading-writing a .csv file, setting a working directory</li>
+<li>generating random variables</li>
+</ul>
+<p><em>B. R GRAPHS | Graphical representation of attributive
+variables:</em></p>
+<ul>
+<li>bar charts, pie charts, histograms</li>
+</ul>
+<p><em>Additionally proposed exercises cover:</em> lists, data
+extraction, grouped bar charts.</p>
+<p><strong>Meetings 3-6: CONTROL STRUCTURES AND FUNCTIONS | Statistical
+measures</strong></p>
+<p><em>A. FOR LOOPS | Challenge: Mean values</em></p>
+<ul>
+<li>for loops, mean(), colMeans()</li>
+<li>compute the mean value of the values of a vector using functions
+sum() and length()</li>
+<li>compute the mean value for each column in a matrix using for loops
+and the functions sum() and length(), nrow() etc.</li>
+</ul>
+<p><em>B. CONDITIONAL STATEMENTS | Challenge: Median values</em></p>
+<ul>
+<li>conditional statements, median(), matrixStats::colMedians()</li>
+<li>compute the median value of the values of a vector using if
+statements, and length(), sort(), trunc() etc.</li>
+<li>compute the median value for each column in a matrix using for
+loops, if statements, and length(), sort(), trunc() etc.</li>
+</ul>
+<p><em>C. FUNCTIONS | Challenge: Mode values</em></p>
+<ul>
+<li>function()</li>
+<li>write a function that returns the mode of the values of a vector
+along with the text “the mode is”</li>
+</ul>
+<p><em>Additionally proposed exercises cover:</em> variance, standard
+deviation, coefficient of variation, quartiles, skewness, kurtosis,
+automatic interpretation of results, data extraction, data
+normalization, rolling windows.</p>
+<p><strong>Meetings 7-8: INDEPENDENT R CODING | Relations between
+statistical variables</strong></p>
+<p><em>A. Cross-tab analysis</em></p>
+<p>Participants receive a database and have 45 minutes to:</p>
+<ul>
+<li>Perform a cross-tab analysis between two quatitative variables
+(scatter plot, Pearson’s correlation coefficient)</li>
+<li>Automate one interpretation/reporting aspect of their cross-tab
+analysis - this could include, but is not restricted to:
+<ul>
+<li>Export your graph into a .pdf, .png etc. file.</li>
+<li>Based on Pearson’s correlation coefficiend and a conditional
+statement of one’s choice print: “Positive/Negative/No correlation”;
+“High/medium/low correlation”; “low positive correlation”, “low negative
+correlation” etc.; The correlation is 0.24 =&gt; low positive
+correlation between salary and salbegin” etc.</li>
+<li>Save into a matrix and export into a .csv file the value of
+Pearson’s correlation coefficient and the interpretation</li>
+<li>Add the Pearson’s correlation coefficient value (and the
+interpretation) on the scatter plot.</li>
+<li>Create an interpretation function.</li>
+<li>Compute the correlation matrix for all the (the quantitative
+continuous/) variables in the data set.</li>
+<li>Using a for loop, plot the scatter plots of multiple variables.</li>
+</ul></li>
+</ul>
+<p><em>B. Linear regression model</em></p>
+<p>Participants receive a database and have 45 minutes to:</p>
+<ul>
+<li>Run a linear regression and name it regression.</li>
+<li>Check one of the assumptions of the linear model: linearity of the
+model, no perfect or near multicolinearity, homoskedasticity errors,
+normality of the residuals.</li>
+<li>Perform one of the:
+<ul>
+<li>Plot the dependent variable against an independent variable and add
+the regression line/against all the quantitative independent variables
+(for loop) and store all the scatter plots into a single .pdf file</li>
+<li>Store the correlation matrix/the regression results into a .csv file
+locally.</li>
+<li>Interpret the result of the test of the assumptions of the linear
+model (conditional statement), R-squared, coefficients, a coefficient -
+if statistically significant etc.</li>
+</ul></li>
+</ul>
+</div>
+<div id="additionally-proposed-exercises" class="section level2">
+<h2>Additionally proposed exercises</h2>
+<p>For each meeting, I provide a list of proposed extra-exercises for
+those interested (<em>rBasics_Meeting no._exercises.pdf</em>). These
+exercises are of 4 types (hopefully supporting many different learning
+styles):</p>
+<ol style="list-style-type: decimal">
+<li>Comment</li>
+<li>Reproduce</li>
+<li>Produce</li>
+<li>Debug</li>
+</ol>
+<p>To cover the diverse backgrounds and interests of the participants,
+these exercises included short examples of:</p>
+<ul>
+<li>Data extraction (from a .pdf file, Yahoo, Eurostat)</li>
+<li>Creating sub-datasets with rolling windows</li>
+<li>Data pre-processing (normalization)</li>
+</ul>
+<div id="acknowledgements" class="section level4">
+<h4>Acknowledgements</h4>
+<p>In 2020 and 2021, I instructed the course free of charge to a
+selected number of UBB FSEGA graduates in collaboration with
+Multicultural Business Institute. The materials in the GitHub repository
+belong to the 2021 edition.</p>
+<div id="datasets" class="section level5">
+<h5>Datasets</h5>
+<p>Throughout this course I used two data sets (slightly altered to meet
+the course’s purposes) from <em>Wooldridge, Jeffrey M. (2013).
+Introductory econometrics: a modern approach. Mason, Ohio: South-Western
+Cengage Learning</em>, namely:</p>
+<ul>
+<li>campus - Campus crimes.csv (Meetings 3-6)</li>
+<li>engin - Wages.csv (Meetings 7-8)</li>
+</ul>
+<p>The original data sets are available at:</p>
+<ol style="list-style-type: decimal">
+<li><a
+href="https://www.cengage.com/cgi-wadsworth/course_products_wp.pl?fid=M20b&amp;product_isbn_issn=9781111531041"
+class="uri">https://www.cengage.com/cgi-wadsworth/course_products_wp.pl?fid=M20b&amp;product_isbn_issn=9781111531041</a></li>
+<li><a
+href="https://cran.r-project.org/web/packages/wooldridge/wooldridge.pdf"
+class="uri">https://cran.r-project.org/web/packages/wooldridge/wooldridge.pdf</a></li>
+</ol>
+</div>
+<div id="course-structure-and-coding-style" class="section level5">
+<h5>Course structure and coding style</h5>
+<p>My teaching style is highly influenced by the ones of my excellent
+professors and colleagues at UBB FSEGA, in particular by professor
+Cristian Litan. Also, I am grateful to Anna Keresztes and Marcos
+Dominguez for their positive influence on my coding style while working
+together.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
